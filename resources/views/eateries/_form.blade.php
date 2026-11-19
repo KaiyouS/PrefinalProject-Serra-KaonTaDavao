@@ -39,7 +39,7 @@
     <div>
         <label class="block text-sm font-medium mb-1">Price range</label>
         <select name="price_range" class="border border-slate-300 rounded px-3 py-2 w-full">
-            @foreach (['budget' => 'Budget (P)', 'mid' => 'Mid (PP)', 'splurge' => 'Splurge (PPP)'] as $val => $label)
+            @foreach (['budget' => 'Budget (₱)', 'mid' => 'Mid (₱₱)', 'splurge' => 'Splurge (₱₱₱)'] as $val => $label)
                 <option value="{{ $val }}" @selected(old('price_range', $eatery->price_range ?? null) === $val)>{{ $label }}</option>
             @endforeach
         </select>
@@ -53,6 +53,7 @@
     </div>
 
     <div>
+        <input type="hidden" name="is_open" value="0">
         <label class="inline-flex items-center gap-2">
             <input type="checkbox" name="is_open" value="1" @checked(old('is_open', $eatery->is_open ?? true))>
             <span class="text-sm">Open for business</span>

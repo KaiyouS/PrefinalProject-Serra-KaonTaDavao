@@ -2,7 +2,7 @@
 @php
     $reviewCount = $eatery->reviews_count ?? $eatery->reviews->count();
     $avgRating = $eatery->reviews_avg_rating ?? ($reviewCount > 0 ? $eatery->reviews->avg('rating') : null);
-    $priceMap = ['budget' => 'P', 'mid' => 'PP', 'splurge' => 'PPP'];
+    $priceMap = ['budget' => '₱', 'mid' => '₱₱', 'splurge' => '₱₱₱'];
     $priceLabel = $priceMap[$eatery->price_range] ?? $eatery->price_range;
 @endphp
 <article class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex flex-col gap-2">
@@ -28,13 +28,12 @@
             @endforeach
         </div>
     @endif
-    <div class="text-sm">
+    <div class="text-sm flex flex-wrap items-center justify-between gap-2">
         @if ($reviewCount > 0)
+            <span class="font-semibold">{{ number_format($avgRating, 1) }} ★ ({{ $reviewCount }} {{ $reviewCount === 1 ? 'review' : 'reviews' }})</span>
             <x-rating :rating="$avgRating" />
-            <span class="ml-1 font-semibold">{{ number_format($avgRating, 1) }}</span>
-            <span class="text-slate-500">({{ $reviewCount }} {{ $reviewCount === 1 ? 'review' : 'reviews' }})</span>
         @else
-            <span class="text-slate-500">No reviews yet.</span>
+            <span class="text-slate-500">No reviews yet</span>
         @endif
     </div>
 </article>

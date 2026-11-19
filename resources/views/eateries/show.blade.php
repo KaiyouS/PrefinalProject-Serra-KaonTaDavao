@@ -5,13 +5,13 @@
         <a href="{{ route('eateries.index') }}" class="text-sm text-slate-500 hover:underline">← Back to eateries</a>
     </div>
 
-    <div class="flex items-start justify-between gap-4 mb-4">
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4 mb-4">
         <div>
             <h1 class="text-2xl font-bold">{{ $eatery->name }}</h1>
             <div class="text-sm text-slate-600 mt-1">
                 <a href="{{ route('districts.show', $eatery->district) }}" class="hover:underline">{{ $eatery->district->name }}</a>
                 · {{ $eatery->address }}
-                · {{ ['budget' => 'P', 'mid' => 'PP', 'splurge' => 'PPP'][$eatery->price_range] ?? $eatery->price_range }}
+                · {{ ['budget' => '₱', 'mid' => '₱₱', 'splurge' => '₱₱₱'][$eatery->price_range] ?? $eatery->price_range }}
                 @if ($eatery->specialty) · {{ $eatery->specialty }} @endif
                 @if (! $eatery->is_open) <span class="ml-2 text-xs bg-rose-100 text-rose-700 px-2 py-0.5 rounded">Closed</span> @endif
             </div>
@@ -39,7 +39,7 @@
             <div class="text-sm text-slate-500">Business Permit</div>
             <div class="font-mono">{{ $eatery->permit->permit_no }}</div>
             <div class="text-sm">Expires: {{ $eatery->permit->expires_on->format('Y-m-d') }}</div>
-            @if ($eatery->permit->expires_on->isPast())
+            @if ($eatery->permit->expires_on->lt(today()))
                 <div class="text-rose-600 font-semibold">Permit expired</div>
             @endif
         </div>
@@ -58,7 +58,7 @@
                             <span class="ml-2 text-xs bg-amber-100 text-amber-800 px-2 py-0.5 rounded">Bestseller</span>
                         @endif
                     </span>
-                    <span class="font-mono">P{{ number_format($dish->price, 2) }}</span>
+                    <span class="font-mono">₱{{ number_format($dish->price, 2) }}</span>
                 </li>
             @endforeach
         </ul>
@@ -69,6 +69,15 @@
     @if ($eatery->is_open)
         <form method="POST" action="{{ route('eateries.reviews.store', $eatery) }}" class="bg-white border border-slate-200 rounded-xl p-4 mb-6 space-y-3">
             @csrf
+            @if ($errors->any())
+                <div class="bg-rose-50 border border-rose-300 text-rose-800 rounded px-4 py-2">
+                    <ul class="list-disc list-inside text-sm">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div>
                 <label class="block text-sm font-medium mb-1">Reviewer</label>
                 <select name="user_id" class="border border-slate-300 rounded px-3 py-2 w-full">
@@ -94,7 +103,7 @@
                 <textarea name="body" rows="3" class="border border-slate-300 rounded px-3 py-2 w-full">{{ old('body') }}</textarea>
                 @error('body') <p class="text-rose-600 text-sm mt-1">{{ $message }}</p> @enderror
             </div>
-            <button type="submit" class="bg-slate-800 text-white px-4 py-2 rounded">Post Review</button>
+            <button type="submit" class="bg-slate-800 text-white px-4 py-2 rounded mt-2">Post Review</button>
         </form>
     @else
         <p class="bg-rose-50 border border-rose-200 text-rose-800 rounded px-4 py-2 mb-6">This eatery is closed. Reviews are paused.</p>
@@ -106,8 +115,8 @@
         <ul class="space-y-3">
             @foreach ($eatery->reviews as $review)
                 <li class="bg-white border border-slate-200 rounded-xl p-4">
-                    <div class="flex items-center justify-between">
-                        <div>
+                    <div class="flex items-start justify-between gap-4">
+                        <div class="flex flex-wrap items-center gap-x-2">
                             <a href="{{ route('reviewers.show', $review->user) }}" class="font-semibold hover:underline">{{ $review->user->name }}</a>
                             <x-rating :rating="$review->rating" />
                             <span class="text-sm text-slate-500">· {{ $review->created_at->format('Y-m-d') }}</span>
