@@ -16,4 +16,9 @@ class Dish extends Model
     protected $casts = [
         'is_bestseller' => 'boolean',
     ];
+
+    public function eatery()
+    {
+        return $this->belongsTo(Eatery::class);
+    }
 }

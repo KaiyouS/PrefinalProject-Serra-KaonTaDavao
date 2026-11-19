@@ -12,4 +12,14 @@ class Review extends Model
         'rating',
         'body',
     ];
+
+    public function eatery()
+    {
+        return $this->belongsTo(Eatery::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

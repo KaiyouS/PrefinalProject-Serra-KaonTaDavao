@@ -15,4 +15,9 @@ class Permit extends Model
     protected $casts = [
         'expires_on' => 'date',
     ];
+
+    public function eatery()
+    {
+        return $this->belongsTo(Eatery::class);
+    }
 }
