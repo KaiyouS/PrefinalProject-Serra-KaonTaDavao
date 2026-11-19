@@ -31,7 +31,7 @@ class EaterySeeder extends Seeder
         ]);
 
         $yourEatery->permit()->create([
-            'permit_no' => 'DV0-2026-1116',
+            'permit_no' => 'DVO-2026-1116',
             'expires_on' => '2027-11-16',
         ]);
 
@@ -76,7 +76,7 @@ class EaterySeeder extends Seeder
             if (! $permitExpired) {
                 // Guarantee at least one already-expired permit (D4)
                 $eatery->permit()->create([
-                    'permit_no' => 'DV0-2024-' . fake()->unique()->numerify('####'),
+                    'permit_no' => 'DVO-2024-' . fake()->unique()->numerify('####'),
                     'expires_on' => '2024-06-01',
                 ]);
                 $permitExpired = true;

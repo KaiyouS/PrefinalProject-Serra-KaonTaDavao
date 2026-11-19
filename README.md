@@ -30,7 +30,7 @@ php artisan serve
 | User 1 | Kaiyou Serra — `serra@kaonta.test` (password: `kaonta2026`) |
 | User 2 | Tita Serra — `tita.serra@kaonta.test` (password: `kaonta2026`) |
 | My eatery | Carinderia ni Serra (slug: `carinderia-ni-serra`) |
-| My permit | `DV0-2026-1116`, expiring `2027-11-16` |
+| My permit | `DVO-2026-1116`, expiring `2027-11-16` |
 
 ## Relationships
 

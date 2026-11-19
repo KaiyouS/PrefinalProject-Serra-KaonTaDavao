@@ -22,7 +22,7 @@ class StoreEateryRequest extends FormRequest
             'is_open' => ['boolean'],
             'features' => ['required', 'array', 'min:1'],
             'features.*' => ['exists:features,id'],
-            'permit_no' => ['required', 'regex:/^DV0-\d{4}-\d{4,5}$/', 'unique:permits,permit_no'],
+            'permit_no' => ['required', 'regex:/^DVO-\d{4}-\d{4,5}$/', 'unique:permits,permit_no'],
             'expires_on' => ['required', 'date', 'after:today'],
         ];
     }
@@ -32,7 +32,7 @@ class StoreEateryRequest extends FormRequest
         return [
             'name.unique' => 'Kaon Ta Serra already lists an eatery with this name.',
             'features.required' => 'Pick at least one feature.',
-            'permit_no.regex' => 'Permit number must look like DV0-2026-0415.',
+            'permit_no.regex' => 'Permit number must look like DVO-2026-0415.',
             'expires_on.after' => 'The permit must not be expired.',
         ];
     }

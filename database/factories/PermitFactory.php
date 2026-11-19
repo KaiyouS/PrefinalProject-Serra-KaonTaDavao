@@ -17,7 +17,7 @@ class PermitFactory extends Factory
     public function definition(): array
     {
         return [
-            'permit_no' => 'DV0-'
+            'permit_no' => 'DVO-'
                 . fake()->numberBetween(2015, 2030)
                 . '-'
                 . fake()->unique()->numerify('####'),
