@@ -47,4 +47,9 @@ class Eatery extends Model
     {
         return $this->belongsToMany(Feature::class);
     }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }
