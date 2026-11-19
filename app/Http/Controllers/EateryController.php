@@ -35,7 +35,11 @@ class EateryController extends Controller
             $query->whereHas('features', fn ($w) => $w->where('name', $featureName));
         }
 
-        $eateries = $query->paginate(6)->withQueryString();
+        $filters = array_filter(
+            $request->only(['q', 'district', 'feature']),
+            fn ($v) => $v !== null && $v !== ''
+        );
+        $eateries = $query->paginate(6)->appends($filters);
         $districts = District::orderBy('name')->get();
         $features = Feature::orderBy('name')->get();
 
