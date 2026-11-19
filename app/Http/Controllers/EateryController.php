@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateEateryRequest;
 use App\Models\District;
 use App\Models\Eatery;
 use App\Models\Feature;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -79,7 +80,9 @@ class EateryController extends Controller
             'reviews' => fn ($q) => $q->with('user')->latest(),
         ]);
 
-        return view('eateries.show', compact('eatery'));
+        $users = User::orderBy('name')->get();
+
+        return view('eateries.show', compact('eatery', 'users'));
     }
 
     public function edit(Eatery $eatery)
